@@ -43,6 +43,36 @@ These datasets and endpoints can be used for:
 - NLP, sentiment analysis, and multimodal AI research  
 - Humanitarian aid coordination and response studies  
 
+## API Functionality
+
+This project includes a FastAPI service that allows you to:
+
+- Check service status:
+
+- - Endpoint: /status
+
+- - Returns whether the API service is currently online or offline.
+
+- Toggle service online/offline:
+
+- - Endpoint: /toggle
+
+- - Switches the API status between online and offline. Useful for dashboards or automated wake-up on platforms like Render.
+
+- Stream disaster data:
+
+- - Endpoint: /data
+
+- - Streams rows of the disaster CSV dataset as a JSON array, one row at a time.
+
+- - Supports optional filtering by:
+
+- - - id → fetch specific posts
+
+- - - lang → fetch posts in a specific language
+
+- NaN-safe JSON: All missing values (NaN or Inf) are converted to null in the output JSON.
+
 ### Example: Accessing an Endpoint
 
 ```python
@@ -63,6 +93,35 @@ for line in response.iter_lines():
         print(line)  # Each line is a JSON object
 
 ```
+
+## How to Run Locally
+
+### 1. Clone the repository
+
+```python
+git clone https://github.com/your-username/social-media-disaster-api.git
+cd social-media-disaster-api
+
+```
+### 2. Create a virtual environment and install dependencies
+```python
+python -m venv .venv
+source .venv/bin/activate  # Linux / macOS
+.venv\Scripts\activate     # Windows
+pip install -r requirements.txt
+
+```
+### 3. Start the FastAPI server
+```python
+uvicorn main:app --reload
+
+```
+### 4. Open Terminal
+Open http://127.0.0.1:8000/docs to access Swagger UI for interactive API documentation.
+```python
+http://127.0.0.1:8000/docs
+```
+
 
 ## References
 
