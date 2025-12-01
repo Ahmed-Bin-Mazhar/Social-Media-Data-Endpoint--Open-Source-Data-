@@ -1,8 +1,10 @@
 # Social Media Disaster Data Repository
 
-This repository contains **open-source datasets** collected from publicly available sources that capture social media activity and disaster-related information. The project focuses on **scraping textual data from these datasets and creating API endpoints** for easy access and analysis.
+This repository contains **open-source datasets** collected from publicly available sources capturing social media activity and disaster-related information. The project focuses on **scraping textual data from these datasets and creating API endpoints** for easy access and analysis.
 
-> Note: Not all datasets listed are directly used in this project. They are included for reference and to assist researchers in locating relevant datasets.
+> Note: Not all datasets listed are directly used in this project. They are included for reference to assist researchers in locating relevant datasets.
+
+---
 
 ## Datasets Included (Reference)
 
@@ -29,13 +31,17 @@ This repository contains **open-source datasets** collected from publicly availa
 | `us-counties-us-counties-fb-social-connectedness-index-october-2021.zip` | Social connectedness index across US counties. |
 | `us-zip-code-us-zip-code-fb-social-connectedness-index-october-2021.zip` | Social connectedness index across US ZIP codes. |
 
+---
+
 ## Source & License
 
 All datasets are **open-source** and have been collected from publicly available repositories online. They are intended for research, analysis, and educational purposes. Please refer to the respective dataset providers for specific licensing details.
 
+---
+
 ## Usage
 
-These datasets and endpoints can be used for:
+These datasets and API endpoints can be used for:
 
 - Social media analytics during disaster events  
 - Crisis communication studies  
@@ -43,35 +49,32 @@ These datasets and endpoints can be used for:
 - NLP, sentiment analysis, and multimodal AI research  
 - Humanitarian aid coordination and response studies  
 
+---
+
 ## API Functionality
 
-This project includes a FastAPI service that allows you to:
+This project includes a **FastAPI service** with the following endpoints:
 
-- Check service status:
+### 1. Check Service Status
 
-- - Endpoint: /status
+- **Endpoint:** `/status`  
+- **Description:** Returns whether the API service is currently online or offline.
 
-- - Returns whether the API service is currently online or offline.
+### 2. Toggle Service Online/Offline
 
-- Toggle service online/offline:
+- **Endpoint:** `/toggle`  
+- **Description:** Switches the API status between online and offline. Useful for dashboards or automated wake-up on platforms like Render.
 
-- - Endpoint: /toggle
+### 3. Stream Disaster Data
 
-- - Switches the API status between online and offline. Useful for dashboards or automated wake-up on platforms like Render.
+- **Endpoint:** `/data`  
+- **Description:** Streams rows of the disaster CSV dataset as a **JSON array**, one row at a time.  
+- **Optional Filters:**  
+  - `id` → Fetch specific posts by ID  
+  - `lang` → Fetch posts in a specific language  
+- **NaN Handling:** All missing values (`NaN` or `Inf`) are converted to `null` in JSON.
 
-- Stream disaster data:
-
-- - Endpoint: /data
-
-- - Streams rows of the disaster CSV dataset as a JSON array, one row at a time.
-
-- - Supports optional filtering by:
-
-- - - id → fetch specific posts
-
-- - - lang → fetch posts in a specific language
-
-- NaN-safe JSON: All missing values (NaN or Inf) are converted to null in the output JSON.
+---
 
 ### Example: Accessing an Endpoint
 
@@ -91,47 +94,50 @@ response = requests.get("http://localhost:8000/data", stream=True)
 for line in response.iter_lines():
     if line:
         print(line)  # Each line is a JSON object
-
 ```
+
+---
 
 ## How to Run Locally
 
 ### 1. Clone the repository
 
-```python
+```bash
 git clone https://github.com/your-username/social-media-disaster-api.git
 cd social-media-disaster-api
-
 ```
+
 ### 2. Create a virtual environment and install dependencies
-```python
+
+```bash
 python -m venv .venv
 source .venv/bin/activate  # Linux / macOS
 .venv\Scripts\activate     # Windows
 pip install -r requirements.txt
-
 ```
+
 ### 3. Start the FastAPI server
-```python
+
+```bash
 uvicorn main:app --reload
-
-```
-### 4. Open Terminal
-Open http://127.0.0.1:8000/docs to access Swagger UI for interactive API documentation.
-```python
-http://127.0.0.1:8000/docs
 ```
 
+### 4. Access Swagger UI
+
+Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) in your browser for **interactive API documentation**.
+
+---
 
 ## References
 
-- Erokhin & Komendantova, *Social media data for disaster risk management and research*, 2024【9†source】  
-- Akbar et al., *Crisis Communication Effectiveness in Disaster Management*, 2025【10†source】  
-- Cantini et al., *Prompt-based LLMs for disaster monitoring*, 2025【11†source】  
-- Xiao et al., *Social Media-Enabled Flood Disaster Informatics*, 2025【12†source】  
-- NDMA Live Disaster Intelligence Dashboard, 2025【13†source】  
+- Erokhin & Komendantova, *Social media data for disaster risk management and research*, 2024  
+- Akbar et al., *Crisis Communication Effectiveness in Disaster Management*, 2025  
+- Cantini et al., *Prompt-based LLMs for disaster monitoring*, 2025  
+- Xiao et al., *Social Media-Enabled Flood Disaster Informatics*, 2025  
+- NDMA Live Disaster Intelligence Dashboard, 2025
+
+---
 
 ## Citation
 
 If you use these datasets or endpoints, please cite the original sources appropriately.
-
