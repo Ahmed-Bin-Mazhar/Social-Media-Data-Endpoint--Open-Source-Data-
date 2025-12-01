@@ -48,9 +48,20 @@ These datasets and endpoints can be used for:
 ```python
 import requests
 
-response = requests.get('http://localhost:8000/api/disasters')
-data = response.json()
-print(data[:5])
+# Check status
+status = requests.get("http://localhost:8000/status").json()
+print(status)  # {"status": "online"}
+
+# Toggle service
+toggle = requests.post("http://localhost:8000/toggle").json()
+print(toggle)  # {"new_status": "online"}
+
+# Fetch disaster data (streamed)
+response = requests.get("http://localhost:8000/data", stream=True)
+for line in response.iter_lines():
+    if line:
+        print(line)  # Each line is a JSON object
+
 ```
 
 ## References
